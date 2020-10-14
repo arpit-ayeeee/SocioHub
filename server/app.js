@@ -9,9 +9,7 @@ require('./models/users');                                  //Gettin schema
 app.use(express.json());                                    //Body parser
 
 
-
 app.use(require('./routes/auth'));                          //Gettin routes
-
 
 
 mongoose.connect(MONGOURI, {
