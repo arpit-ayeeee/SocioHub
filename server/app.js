@@ -5,13 +5,8 @@ const mongoose = require('mongoose');
 const PORT = 5000
 const {MONGOURI} = require('./keys');
 
-require('./models/users');                                  //Gettin schema
-app.use(express.json());                                    //Body parser
 
-
-app.use(require('./routes/auth'));                          //Gettin routes
-
-
+//Establishing the connection with database
 mongoose.connect(MONGOURI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -22,6 +17,19 @@ mongoose.connection.on('connection', () => {
 mongoose.connection.on('error', (err) => {
     console.log("Error connecting", err);
 })
+
+
+//Gettin schema
+require('./models/users');                                  
+require('./models/post');
+
+
+app.use(express.json());                                    //Body parser
+
+//Gettin routes
+app.use(require('./routes/auth')); 
+app.use(require('./routes/post'));                         
+
 
 app.listen(PORT, () => {
     console.log("Server running successfully on ", PORT);
