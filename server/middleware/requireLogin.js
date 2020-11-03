@@ -20,7 +20,7 @@ module.exports = (req, res, next) => {
         User.findById(_id)                                                //Now we'll find the user by the id provided in the payload which we provided in the token
             .then(userdata => {                                 
                 req.user = userdata;                 
-                next();                                                            //In order to continue to next middleware                     
+                next();                                                   //In order to continue to next middleware                     
        })
     })
 

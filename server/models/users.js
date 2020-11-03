@@ -15,4 +15,4 @@ const userSchema = new mongoose.Schema({
     }
 })
 
-mongoose.model("User", userSchema);                                         //We'll not export it as a module, cause we have to use it in many places so we'll just export it
+mongoose.model("User", userSchema);                 //We'll not export it as a module, cause we have to use it in many places so we'll just export it
