@@ -5,6 +5,7 @@ import Home from './components/Home';
 import Login from './components/Login';
 import Profile from './components/Profile';
 import Signup from './components/Signup';
+import CreatePost from './components/CreatePost';
 import {BrowserRouter, Route} from 'react-router-dom';
 
 class App extends Component {
@@ -17,6 +18,7 @@ class App extends Component {
         <Route exact path="/login"><Login /></Route>
         <Route exact path="/signup"><Signup /></Route>
         <Route exact path="/profile"><Profile /></Route>
+        <Route exact path="/createpost"><CreatePost /></Route>
       </BrowserRouter>
     );
   }

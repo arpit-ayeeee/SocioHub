@@ -1,10 +1,13 @@
 a{
     color: black !important;
 }
+/* NAVBAR */
 .brand-logo{
     font-family: 'Grand Hotel', cursive;
     margin-left: 30px;
 }
+
+/* LOGIN & SIGNUP */
 .auth-card{
     margin: 200px auto;
     padding: 10px 20px;
@@ -18,11 +21,8 @@ a{
     border-bottom: 1px solid rgb(8, 93, 252) !important;
     box-shadow: 0 1px 0 0 rgb(8, 93, 252) !important;
 }
-.gallery{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-}
+
+/* PROFILE */
 .item{
     width: 32%;
     margin: 5px;
@@ -32,8 +32,15 @@ a{
         margin: 2px;
     }
 }
+
+/* HOME */
 .home-card{
     max-width: 600px;
     height: max-content;
     margin: 26px auto;
+}
+
+/* CreatePost */
+.createPostHeader{
+    font-family: 'Grand Hotel', cursive;
 }
