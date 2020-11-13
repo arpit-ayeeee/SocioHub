@@ -60,7 +60,8 @@ authRouter.post('/login', (req, res, next) => {
             .then(doMatch => {                                              //If the password matches, then only bcrypt will return domatch, else it wont 
                 if(doMatch){                                                //If user matches we'll pass the user a token, which it can use to route the restricted resources. We'll create a token using jwt
                     const token = jwt.sign({_id : savedUser._id}, JWT_SECRET);
-                    res.json({token});                                      //And pass it back to the user
+                    const { _id, name, email} = savedUser;
+                    res.json({token, user:{_id, name, email}});                                      //And pass it back to the user
                 }
                 else{
                     return res.status(422).json({error: "Invalid email or password"});

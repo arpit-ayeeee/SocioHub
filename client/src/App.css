@@ -44,3 +44,10 @@ a{
 .createPostHeader{
     font-family: 'Grand Hotel', cursive;
 }
+
+
+#toast-container{
+    top: 70px !important;
+    right: 20px !important;
+    left: auto !important;
+}

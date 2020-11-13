@@ -2,7 +2,9 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:5000",
   "dependencies": {
+    "materialize-css": "^1.0.0-rc.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-router-dom": "^5.2.0",
