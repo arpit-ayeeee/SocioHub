@@ -13,7 +13,7 @@ const postSchema = new mongoose.Schema({
     },
     photo: {
         type: String,
-        default: "No photo"
+        required: true
     },
     postedBy: {
         type: ObjectId,                                 //This will be the id of the user from the User schema

@@ -20,8 +20,8 @@ postRouter.get('/allposts', requireLogin, (req, res) => {        //Since the req
 
 //Posting the post
 postRouter.post('/createpost', requireLogin, (req, res) => {    //Only registered users can post
-    const { title, body} = req.body;
-    if(!title || !body){                                        //If title or body isnt present, then we'll throw error
+    const { title, body, pic} = req.body;
+    if(!title || !body || !pic){                                        //If title or body isnt present, then we'll throw error
         return res.status(422).json({error: "Please enter all the fields"});
     }
     
@@ -29,6 +29,7 @@ postRouter.post('/createpost', requireLogin, (req, res) => {    //Only registere
     const post = new Post({
         title,
         body,
+        pic,
         postedBy: req.user                                      //This will have the whole data of user, as the middleware after verifying the user from the token, it will add the user's data to req
     }); 
     post.save()                                                 //Then we'll save the post and return the result or catch if there is a mistake
