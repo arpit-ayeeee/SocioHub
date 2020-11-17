@@ -29,7 +29,7 @@ postRouter.post('/createpost', requireLogin, (req, res) => {    //Only registere
     const post = new Post({
         title,
         body,
-        pic,
+        photo: pic,
         postedBy: req.user                                      //This will have the whole data of user, as the middleware after verifying the user from the token, it will add the user's data to req
     }); 
     post.save()                                                 //Then we'll save the post and return the result or catch if there is a mistake

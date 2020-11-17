@@ -28,6 +28,8 @@ const Login = () => {
                     M.toast({html: data.error, classes:"#c62828 red darken-3"});         //Usage of toast if we get an error after sending the data
                 }
                 else{
+                    localStorage.setItem("jwt", data.token) //Now, when loggedin, the backend will return a token, we'll save that
+                    localStorage.setItem("user", JSON.stringify(data.user)) //We'll also save the details of the user as it's returned too when the user is logged in 
                     M.toast({html:"LoggedIn succesfully", classes:"#43a047 green darken-1"});
                     history.push('/');                      //This will redirect user to the home screen
                 }
