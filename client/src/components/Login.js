@@ -1,8 +1,10 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
+import {UserContext} from '../App';                         //We'll import the context from app.js, so that we'll update the state here so it'll we updated globally  
 import {Link, useHistory} from 'react-router-dom';
 import M from "materialize-css";
 
 const Login = () => {
+        const {state, dispatch} = useContext(UserContext);
         const history = useHistory();                       //We'll use this to send the user back to the login page after the user is signed in succesfully
         const [password, setPassword] = useState('');
         const [email, setEmail] = useState('');
@@ -30,6 +32,7 @@ const Login = () => {
                 else{
                     localStorage.setItem("jwt", data.token) //Now, when loggedin, the backend will return a token, we'll save that
                     localStorage.setItem("user", JSON.stringify(data.user)) //We'll also save the details of the user as it's returned too when the user is logged in 
+                    dispatch({type:"USER", payload: data.user}); //So, once user is logged in this details, will go to reducer, and it'll have the updated state and data of the particular user logged in
                     M.toast({html:"LoggedIn succesfully", classes:"#43a047 green darken-1"});
                     history.push('/');                      //This will redirect user to the home screen
                 }
