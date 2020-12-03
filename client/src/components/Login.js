@@ -42,9 +42,9 @@ const Login = () => {
     return(
         <div className="mycard">
             <div className="card auth-card input-field">
-                <h2>Instagram</h2>
+                <h2>SocioHub</h2>
                 <input type="text" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)}/>
-                <input type="text" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)}/>
+                <input type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)}/>
                 <button className ="btn waves-effect waves-light #64b5f6 blue darken-1" onClick={() => postData()}>Login</button>
                 <h5><Link to="/signup">Don't have an account?</Link></h5>
             </div>

@@ -1,4 +1,4 @@
-import React, {Component, useEffect, createContext, useReducer, useContext} from 'react';
+import React, {useEffect, createContext, useReducer, useContext} from 'react';
 import './App.css';
 import Navbar from './components/Navbar';
 import Home from './components/Home';
@@ -12,14 +12,14 @@ import {userReducer, initialState} from './Reducers/userReducer';
 export const UserContext = createContext();          //We'll create a context api, to provide the user's state of authentication and change it globally
 
 
-const Routing = () => {
+const Routing = ()=>{
   const history = useHistory();
-  const [state, dispatch] = useContext(UserContext);
+  const {state, dispatch} = useContext(UserContext);
   useEffect(() => {                 //We'll use this effect sabse pehle, so that if user is logged in then it'll be directed to home screen, else it'll go to login
     const user = JSON.parse(localStorage.getItem("user")); //Once any user is logged in the backend will return the token and details, which will be saved in the local storage, so this user will have that details parsed
     if(user){
       dispatch({type:'USER', payload:user});      //Since there is a user we need to update the state with it
-      history.push('/');
+    
     }
     else{
       history.push('/signup');

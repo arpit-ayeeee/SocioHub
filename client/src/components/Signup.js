@@ -39,7 +39,7 @@ const Signup = () => {
     return(
         <div className="mycard">
             <div className="card auth-card input-field">
-                <h2>Instagram</h2>
+                <h2>SocioHub</h2>
                 <input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)}/> 
                 <input type="text" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
                 <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>

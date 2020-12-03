@@ -1,44 +1,40 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+
 
 const Home = () => {
+    const [data, setData] = useState([]);
+    useEffect(() => {
+        fetch('/allposts',{
+            method: "get",
+            headers:{
+                "Authorization":"Bearer "+ localStorage.getItem("jwt") 
+            }
+        })
+        .then(res => res.json())
+        .then(result => {
+            setData(result.posts);                              //Because result is an object, inside which me have the posts array
+        })
+    }, [])
     return(
         <div className="home">
-            <div className="card home-card">
-                <h5>Nicolas</h5>
-                <div className="card-image">
-                    <img src="https://images.unsplash.com/photo-1508739773434-c26b3d09e071?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80" />
-                </div>
-                <div className="card-content">
-                    <i className="material-icons" style={{color:"red"}}>favorite</i>
-                    <h6>Title</h6>
-                    <p>This is amazng post</p>
-                    <input type="text" placeholder="Add a comment" />
-                </div>
-            </div>
-            <div className="card home-card">
-                <h5>Nicolas</h5>
-                <div className="card-image">
-                    <img src="https://images.unsplash.com/photo-1508739773434-c26b3d09e071?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80" />
-                </div>
-                <div className="card-content">
-                    <i className="material-icons" style={{color:"red"}}>favorite</i>
-                    <h6>Title</h6>
-                    <p>This is amazng post</p>
-                    <input type="text" placeholder="Add a comment" />
-                </div>
-            </div>
-            <div className="card home-card">
-                <h5>Nicolas</h5>
-                <div className="card-image">
-                    <img src="https://images.unsplash.com/photo-1508739773434-c26b3d09e071?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80" />
-                </div>
-                <div className="card-content">
-                    <i className="material-icons" style={{color:"red"}}>favorite</i>
-                    <h6>Title</h6>
-                    <p>This is amazng post</p>
-                    <input type="text" placeholder="Add a comment" />
-                </div>
-            </div>
+            {
+                data.map((user) => {
+                    return(
+                        <div className="card home-card" key={user._id}>
+                            <h5 style={{marginLeft:"5px", height:"50px", padding:"15px"}}>{user.postedBy.name}</h5>
+                            <div className="card-image">
+                                <img src={user.photo}/>
+                            </div>
+                            <div className="card-content">
+                                <i className="material-icons" style={{color:"red"}}>favorite</i>
+                                <h6><strong>{user.postedBy.name}</strong> {user.title}</h6>
+                                <p>{user.body}</p>
+                                <input type="text" placeholder="Add a comment" />
+                            </div>
+                        </div>
+                    )
+                })
+            }
         </div>
 
     )
