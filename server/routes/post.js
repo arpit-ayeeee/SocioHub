@@ -55,6 +55,38 @@ postRouter.get('/myposts', requireLogin, (req, res) => {
 })
 
 
+//Route for like
+postRouter.put('/like', requireLogin, (req, res) => {           //We'll use put method for updating the like status of that particular post
+    Post.findByIdAndUpdate(req.body.postId,{                    //So, whenever user clicks on like, we'll find the post by id and push the user id in likes part of the post schema
+        $push:{likes: req.user._id}
+    },{
+        new: true                                               //We add this third parameter, because if we dont add new=true, mongodb will return us the old record rather than the updated record
+    })                 
+    .exec((err, result) => {                                 //Then we'll execute it and return the results
+        if(err){
+            return res.status(422).json({error: err})
+        }
+        else{
+            res.json(result)
+        }
+    })
+})
 
+//Route for unlike  
+postRouter.put('/unlike', requireLogin, (req, res) => {            //Else, everything will be same
+    Post.findByIdAndUpdate(req.body.postId,{
+        $pull:{likes: req.user._id}                                 //Here for unlike we'll just pull the userid from the like part of the post schema
+    },{
+        new:true
+    })
+    .exec((err, result) => {
+        if(err){
+            return res.status(422).json({error: err})
+        }
+        else{
+            res.json(result)
+        }
+    })
+})
 
 module.exports = postRouter;
