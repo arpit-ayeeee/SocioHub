@@ -13,12 +13,12 @@ const Home = () => {
         })
         .then(res => res.json())
         .then(result => {
-            console.log(result);
+            console.log(result)
             setData(result.posts);                              //Because result is an object, inside which me have the posts array
         })
     }, [])
 
-    const likePost = (id) => {
+    const likePost = (postId) => {
         fetch('/like', {
             method: "put",
             headers: {
@@ -26,13 +26,13 @@ const Home = () => {
                 "Authorization":"Bearer "+ localStorage.getItem("jwt") 
             },
             body: JSON.stringify({
-                postId: id
+                postId: postId
             })
         })
             .then(res => res.json())
             .then(result => {
                 const newData = data.map(item => {          //We need to update the data, when the result comes after liking, so that the no of likes will be update that time only
-                    if(item._id == result._id){
+                    if(item._id == result._id){             //Means we'll be iterating over the items, and if it matches, we'll return the new result
                         return result
                     }
                     else{
@@ -45,7 +45,7 @@ const Home = () => {
                 console.log(err)
             })
     }
-    const unlikePost = (id) => {
+    const unlikePost = (postId) => {
         fetch('/unlike', {
             method: "put",
             headers: {
@@ -53,7 +53,7 @@ const Home = () => {
                 "Authorization":"Bearer "+ localStorage.getItem("jwt") 
             },
             body: JSON.stringify({
-                postId: id
+                postId: postId
             })
         })
         .then(res => res.json())
@@ -69,6 +69,35 @@ const Home = () => {
                 setData(newData)
         })
         .catch(err => {
+            console.log(err)
+        })
+    }
+    const addComment = (postId, text) => {
+        fetch('/addcomment', {
+            method:"put",
+            headers: {
+                "Content-Type":"application/json",
+                "Authorization":"Bearer "+ localStorage.getItem("jwt") 
+            },
+            body: JSON.stringify({
+                text: text,
+                postId: postId
+            })
+        })
+        .then(res => res.json())
+        .then(result => {
+            console.log(result)
+            const newData = data.map(item => {
+                if(item._id == result._id){
+                    return result
+                }
+                else{
+                    return item
+                }
+            })
+            setData(newData)
+        })
+        .catch((err) => {
             console.log(err)
         })
     }
@@ -92,7 +121,19 @@ const Home = () => {
                                 <h6> {post.likes.length} likes</h6>                           {/* For the number of likes*/}
                                 <h6><strong>{post.postedBy.name}</strong> {post.title}</h6>
                                 <p>{post.body}</p>
-                                <input type="text" placeholder="Add a comment" />
+                                {
+                                    post.comments.map(comment => {
+                                        return(
+                                            <h6 key={post._id}><span style={{fontWeight:"500"}}>{comment.postedBy.name}</span> {comment.text}</h6>
+                                        )
+                                    })
+                                }
+                                <form onSubmit={(e) => {
+                                    e.preventDefault()
+                                    addComment(post._id, e.target[0].value)     //We dont need to add value and all, we can directly access the event
+                                }}>
+                                    <input type="text" placeholder="Add a comment"/>
+                                </form>
                             </div>
                         </div>
                     )

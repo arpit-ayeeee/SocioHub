@@ -10,6 +10,7 @@ const Post = mongoose.model('Post');
 postRouter.get('/allposts', requireLogin, (req, res) => {        //Since the requirelogin middleware returns the userdata in the result, we'll use it here in the PostedBy part of the the schema
     Post.find()                                                 //Cause we want all the posts
         .populate('postedBy',"_id name")                        //So that we'll get _id and name of the user rather than just the objectId. The first para tells which component and second tell the part to be displayed
+        .populate('comments.postedBy','_id name')
         .then(posts => {
             res.json({posts})
         })
@@ -45,6 +46,7 @@ postRouter.post('/createpost', requireLogin, (req, res) => {    //Only registere
 //Fetching all the posts created by the particular user who's logged in 
 postRouter.get('/myposts', requireLogin, (req, res) => {
     Post.find({postedBy: req.user._id})
+    .populate("comments.postedBy", "_id name")              //We'll populate the postedBy, cause we need the name of the user who posted it 
     .populate("postedBy", "_id name")
     .then(mypost => {
         res.json({mypost});
@@ -61,7 +63,9 @@ postRouter.put('/like', requireLogin, (req, res) => {           //We'll use put 
         $push:{likes: req.user._id}
     },{
         new: true                                               //We add this third parameter, because if we dont add new=true, mongodb will return us the old record rather than the updated record
-    })                 
+    }) 
+    .populate("comments.postedBy", "_id name")              //We'll populate the postedBy, cause we need the name of the user who posted it 
+    .populate("postedBy", "_id name")                
     .exec((err, result) => {                                 //Then we'll execute it and return the results
         if(err){
             return res.status(422).json({error: err})
@@ -79,6 +83,31 @@ postRouter.put('/unlike', requireLogin, (req, res) => {            //Else, every
     },{
         new:true
     })
+    .populate("comments.postedBy", "_id name")              //We'll populate the postedBy, cause we need the name of the user who posted it 
+    .populate("postedBy", "_id name")
+    .exec((err, result) => {
+        if(err){
+            return res.status(422).json({error: err})
+        }
+        else{
+            res.json(result)
+        }
+    })
+})
+
+//Route to add comment
+postRouter.put('/addcomment', requireLogin, (req, res) => {   
+    const comment = {
+        text: req.body.text,
+        postedBy: req.user._id                  //Retrieving the user data from requireLogin  middleware
+    }         
+    Post.findByIdAndUpdate(req.body.postId,{
+        $push:{comments:comment}                                
+    },{
+        new:true
+    })
+    .populate("comments.postedBy", "_id name")              //We'll populate the postedBy, cause we need the name of the user who posted it 
+    .populate("postedBy", "_id name")
     .exec((err, result) => {
         if(err){
             return res.status(422).json({error: err})
