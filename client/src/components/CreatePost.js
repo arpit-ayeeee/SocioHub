@@ -5,7 +5,6 @@ import { useHistory } from 'react-router-dom';
 const CreatePost = () => {
     const history = useHistory(); 
     const [title, setTitle] = useState("");
-    const [body, setBody] = useState("");
     const [image, setImage] = useState("");
     const [url, setUrl] = useState("");
     useEffect(() => {                                    //We'll use this function, with the base condition that if url changes, then only the method inside will start operating. So, that when the images is uploaded to cloudinary, and we get the url then only this process will start
@@ -18,7 +17,6 @@ const CreatePost = () => {
                 },
                 body: JSON.stringify({
                     title: title,
-                    body: body,
                     pic: url
                 })
             })
@@ -59,7 +57,6 @@ const CreatePost = () => {
         <div className="card input-filed" style={{margin:"150px auto", maxWidth:"500px", padding:"20px", textAlign:"center"}}>
             <h2 className="createPostHeader">Add post</h2>
             <input type="text" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)}/>
-            <input type="text" placeholder="Body" value={body} onChange={(e) => setBody(e.target.value)}/>
             <div className="file-field input-field">                 {/*For adding the image file to upload */}
                 <div className="btn  #64b5f6 green darken">
                     <span>Upload image</span>

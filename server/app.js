@@ -20,15 +20,17 @@ mongoose.connection.on('error', (err) => {
 
 
 //Gettin schema
-require('./models/users');                                  
+require('./models/user');                                  
 require('./models/post');
+
 
 
 app.use(express.json());                                    //Body parser
 
 //Gettin routes
 app.use(require('./routes/auth')); 
-app.use(require('./routes/post'));                         
+app.use(require('./routes/post')); 
+app.use(require('./routes/user'));                        
 
 
 app.listen(PORT, () => {

@@ -21,15 +21,14 @@ postRouter.get('/allposts', requireLogin, (req, res) => {        //Since the req
 
 //Posting the post
 postRouter.post('/createpost', requireLogin, (req, res) => {    //Only registered users can post
-    const { title, body, pic} = req.body;
-    if(!title || !body || !pic){                                        //If title or body isnt present, then we'll throw error
+    const { title, pic} = req.body;
+    if(!title || !pic){                                        //If title or body isnt present, then we'll throw error
         return res.status(422).json({error: "Please enter all the fields"});
     }
     
     req.user.password = undefined;                              //This wont allow to store user's pasword in the postedBt field of the post schema
     const post = new Post({
         title,
-        body,
         photo: pic,
         postedBy: req.user                                      //This will have the whole data of user, as the middleware after verifying the user from the token, it will add the user's data to req
     }); 
@@ -47,7 +46,7 @@ postRouter.post('/createpost', requireLogin, (req, res) => {    //Only registere
 postRouter.get('/myposts', requireLogin, (req, res) => {
     Post.find({postedBy: req.user._id})
     .populate("comments.postedBy", "_id name")              //We'll populate the postedBy, cause we need the name of the user who posted it 
-    .populate("postedBy", "_id name")
+    .populate("postedBy", "_id name") 
     .then(mypost => {
         res.json({mypost});
     })
@@ -118,4 +117,23 @@ postRouter.put('/addcomment', requireLogin, (req, res) => {
     })
 })
 
+
+//Route to delete post
+postRouter.delete('/deletepost/:postId', requireLogin, (req, res) => {
+    Post.findOne({_id:req.params.postId})                   //We can access the postId which we got from url from frontend, by params
+        .exec((err, post) => {
+            if(err || !post){                                   //We'll check if there is an error or wheather the post is not present 
+                return res.status(422).json({error: err})
+            }
+            else{
+                post.remove()
+                .then(result => {
+                    res.json(result)
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+            }
+        })
+})
 module.exports = postRouter;

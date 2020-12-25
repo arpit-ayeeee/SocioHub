@@ -1,13 +1,9 @@
 //This schema is for posting image
 const mongoose = require('mongoose');
-const {ObjectId} = mongoose.Schema.Types;
+const {ObjectId} = mongoose.Schema.Types;                       // We use this so that we can take the data from another model
 
 const postSchema = new mongoose.Schema({
     title: {
-        type: String,
-        required: true
-    },
-    body: {
         type: String,
         required: true
     },

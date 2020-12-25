@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {UserContext} from '../App';
+import {Link} from 'react-router-dom';
 
 const Home = () => {
     const [data, setData] = useState([]);
@@ -32,7 +33,7 @@ const Home = () => {
             .then(res => res.json())
             .then(result => {
                 const newData = data.map(item => {          //We need to update the data, when the result comes after liking, so that the no of likes will be update that time only
-                    if(item._id == result._id){             //Means we'll be iterating over the items, and if it matches, we'll return the new result
+                    if(item._id === result._id){             //Means we'll be iterating over the items, and if it matches, we'll return the new result
                         return result
                     }
                     else{
@@ -59,7 +60,7 @@ const Home = () => {
         .then(res => res.json())
         .then(result => {
                 const newData = data.map(item => {
-                    if(item._id == result._id){
+                    if(item._id === result._id){
                         return result
                     }
                     else{
@@ -88,7 +89,7 @@ const Home = () => {
         .then(result => {
             console.log(result)
             const newData = data.map(item => {
-                if(item._id == result._id){
+                if(item._id === result._id){
                     return result
                 }
                 else{
@@ -101,13 +102,38 @@ const Home = () => {
             console.log(err)
         })
     }
+    const deletePost = (postId) => {
+        fetch(`/deletepost/${postId}`, {
+            method: 'delete',
+            headers: {
+                "Authorization":"Bearer "+ localStorage.getItem("jwt") 
+            }
+        })
+        .then(res => res.json())
+        .then(result => {
+            console.log(result)
+            const newData = data.filter(post => {
+                return post._id !== result._id
+            })
+            setData(newData)
+        })
+    }
     return(
         <div className="home">
             {
                 data.map((post) => {
                     return(
                         <div className="card home-card" key={post._id}>
-                            <h5 style={{marginLeft:"5px", height:"50px", padding:"15px"}}>{post.postedBy.name}</h5>
+                            <h5 style={{marginLeft:"5px", height:"50px", padding:"15px"}}>
+                                <Link to={"/userprofile/"+ post.postedBy._id}>{post.postedBy.name}</Link>       {/* So if user clicks on the post creater name, we'll pass the user's id to the userprofile route*/}
+                                {
+                                    post.postedBy._id == state._id ?
+                                    <i className="material-icons" style={{float:"right"}} onClick={() => deletePost(post._id)}>
+                                        delete
+                                    </i>
+                                    : null
+                                } 
+                            </h5>
                             <div className="card-image">
                                 <img src={post.photo}/>
                             </div>
@@ -120,11 +146,12 @@ const Home = () => {
                                 }
                                 <h6> {post.likes.length} likes</h6>                           {/* For the number of likes*/}
                                 <h6><strong>{post.postedBy.name}</strong> {post.title}</h6>
-                                <p>{post.body}</p>
                                 {
                                     post.comments.map(comment => {
                                         return(
-                                            <h6 key={post._id}><span style={{fontWeight:"500"}}>{comment.postedBy.name}</span> {comment.text}</h6>
+                                            <h6 key={post._id}>
+                                                <span style={{fontWeight:"500"}}>{comment.postedBy.name}</span> {comment.text}
+                                            </h6>
                                         )
                                     })
                                 }

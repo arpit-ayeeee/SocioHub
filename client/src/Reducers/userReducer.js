@@ -9,6 +9,13 @@ export const userReducer = (state, action) => {
     if(action.type === "CLEAR"){     //For logging out
         return null;
     }
+    if(action.type === "UPDATE"){
+        return {                        //If the type is this, we'll return the updated state after appending the new schema type
+            ...state, 
+            followers: action.payload.followers,
+            following: action.payload.following
+        }
+    }
     else{
         return state;
     }
