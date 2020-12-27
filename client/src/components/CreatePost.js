@@ -56,7 +56,7 @@ const CreatePost = () => {
     return(
         <div className="card input-filed" style={{margin:"150px auto", maxWidth:"500px", padding:"20px", textAlign:"center"}}>
             <h2 className="createPostHeader">Add post</h2>
-            <input type="text" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)}/>
+            <input type="text" placeholder="Caption" value={title} onChange={(e) => setTitle(e.target.value)}/>
             <div className="file-field input-field">                 {/*For adding the image file to upload */}
                 <div className="btn  #64b5f6 green darken">
                     <span>Upload image</span>

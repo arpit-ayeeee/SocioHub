@@ -4,10 +4,10 @@ import {useParams} from 'react-router-dom';
 
 const UserProfile = () => {
    const {state, dispatch} = useContext(UserContext)
-   const [showFollow, setshowfollow] = useState(true);                  //For changing the buttons from follow to unfollow once the user follws the other user
    const [data, setData] = useState(null);
    const {userid} = useParams();            //This hook is used to get the parameter from the url
-   console.log(userid);
+   const [showFollow, setshowfollow] = useState(state?!state.following.includes(userid): true);      
+    //For changing the buttons from follow to unfollow once the user follows the other user, like if the current user's following already has this user, it'll return true and will result in false as we're using ! this
    useEffect(() => {
       fetch(`/user/${userid}`, {
          method: "get",
@@ -85,7 +85,7 @@ const UserProfile = () => {
            <div style={{display:"flex", justifyContent:"space-around", margin:"18px 0px", borderBottom:"1px solid grey"}} className="DpNameDiv">
                <div className="DpDiv">
                    <img style={{width:"160px", height:"160px", borderRadius:"80px"}}
-                        src="https://images.unsplash.com/photo-1546458904-143d1674858d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=758&q=80"
+                        src={data.user.pic}
                          />
                </div>
                <div className="NameDiv left">

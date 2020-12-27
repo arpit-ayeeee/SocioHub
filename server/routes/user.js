@@ -85,5 +85,17 @@ userRouter.put('/unfollow', requireLogin, (req, res) => {
     )          
 })
 
+//Rouute to update the dp
+userRouter.put("/updatePic",requireLogin, (req, res) => {
+    User.findByIdAndUpdate(req.user._id,
+        {$set: {pic: req.body.pic}},                //We'll update the database
+        {new: true},
+        (err, result) => {
+            if(err){
+                return res.status(422).json({error:"Pic cant be posted"})
+            }
+            res.json(result);
+        })
+})
 
 module.exports = userRouter;

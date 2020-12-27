@@ -9,7 +9,7 @@ const {JWT_SECRET} = require('../keys');
 
 //Signup Route
 authRouter.post('/signup', (req,res) => {                         //Signup page post route
-    const {name, email, password} = req.body;
+    const {name, email, password, pic} = req.body;
 
     if(!email || !password || !name){                        //Validation
         return res.status(422).json({error : "Please enter all the fields"});
@@ -26,6 +26,7 @@ authRouter.post('/signup', (req,res) => {                         //Signup page 
                 email,
                 password: hashedpassword,
                 name,
+                pic
             });
             user.save()
             .then(user => {
@@ -60,8 +61,8 @@ authRouter.post('/login', (req, res, next) => {
             .then(doMatch => {                                              //If the password matches, then only bcrypt will return domatch, else it wont 
                 if(doMatch){                                                //If user matches we'll pass the user a token, which it can use to route the restricted resources. We'll create a token using jwt
                     const token = jwt.sign({_id : savedUser._id}, JWT_SECRET);
-                    const { _id, name, email} = savedUser;
-                    res.json({token, user:{_id, name, email}});                                      //And pass it back to the user
+                    const { _id, name, email, followers, following, pic} = savedUser;
+                    res.json({token, user:{_id, name, email, followers, following, pic}});                                      //And pass it back to the user
                 }
                 else{
                     return res.status(422).json({error: "Invalid email or password"});

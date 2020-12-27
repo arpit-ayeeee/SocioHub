@@ -11,6 +11,7 @@ const Navbar = () => {
                 <div>
                     <li><Link to="/profile">Profile</Link></li>
                     <li><Link to="/createpost">Create</Link></li>
+                    <li><Link to="/home">Explore</Link></li>
                     <li>
                         <button className ="btn #c62828 red darken-3" style={{marginRight:"10px"}} 
                             onClick={() => {

@@ -2,11 +2,11 @@ import React, {useState, useEffect, useContext} from 'react';
 import {UserContext} from '../App';
 import {Link} from 'react-router-dom';
 
-const Home = () => {
+const Followedposts = () => {
     const [data, setData] = useState([]);
     const {state, dispatch} = useContext(UserContext);
     useEffect(() => {
-        fetch('/allposts',{
+        fetch('/followedposts',{
             method: "get",
             headers:{
                 "Authorization":"Bearer "+ localStorage.getItem("jwt") 
@@ -121,11 +121,13 @@ const Home = () => {
     }
     return(
         <div className="home">
-            {
-                data.map((post) => {
+            {   
+                data.length === 0 
+                ? <h4 style={{margin:"20% 30%"}}>Follow other users to view their posts!</h4>
+                :data.map((post) => {
                     return(
                         <div className="card home-card" key={post._id}>
-                            <h5 style={{marginLeft:"2px", height:"50px", padding:"15px"}}>
+                            <h5 style={{marginLeft:"5px", height:"50px", padding:"15px"}}>
                                 <img src={post.postedBy.pic} style={{borderRadius:"2px", height:"40px", padding:"5px"}}></img>
                                 <Link to={"/userprofile/"+ post.postedBy._id} style={{marginLeft:"5px", position:"absolute", top:"20px"}}>{post.postedBy.name}</Link>       {/* So if user clicks on the post creater name, we'll pass the user's id to the userprofile route*/}
                                 {
@@ -173,4 +175,4 @@ const Home = () => {
     )
 }
 
-export default Home;
+export default Followedposts;

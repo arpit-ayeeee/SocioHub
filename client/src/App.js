@@ -6,9 +6,11 @@ import Login from './components/Login';
 import Profile from './components/Profile';
 import Signup from './components/Signup';
 import CreatePost from './components/CreatePost';
-import UserProfile from './components/UserProfile'
+import UserProfile from './components/UserProfile';
+import Followedposts from './components/Followedposts';
 import {BrowserRouter, Route, Switch, useHistory,} from 'react-router-dom';
 import {userReducer, initialState} from './Reducers/userReducer';
+
 
 export const UserContext = createContext();          //We'll create a context api, to provide the user's state of authentication and change it globally
 
@@ -28,12 +30,14 @@ const Routing = ()=>{
   },[])
   return(
     <Switch>
-        <Route exact path="/"><Home /></Route>
+        <Route exact path="/"><Followedposts /></Route> {/* So main page will be following posts page*/}
+        <Route exact path="/home"><Home /></Route>    {/* And home page will be in explore section */}
         <Route exact path="/login"><Login /></Route>
         <Route exact path="/signup"><Signup /></Route>
         <Route exact path="/profile"><Profile /></Route>
         <Route exact path="/createpost"><CreatePost /></Route>
         <Route exact path="/userprofile/:userid"><UserProfile /></Route>
+        
     </Switch>
   )
 }

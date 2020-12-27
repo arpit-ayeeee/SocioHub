@@ -22,6 +22,10 @@ const userSchema = new mongoose.Schema({
         type: ObjectId,
         ref: "User"
     }],
+    pic:{
+        type: String,
+        default: "https://res.cloudinary.com/arpitig-clone/image/upload/v1609091132/Unknown_c1uea6.jpg"
+    }
 })
 
 mongoose.model("User", userSchema);                 //We'll not export it as a module, cause we have to use it in many places so we'll just export it

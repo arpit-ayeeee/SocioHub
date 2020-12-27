@@ -16,6 +16,12 @@ export const userReducer = (state, action) => {
             following: action.payload.following
         }
     }
+    if(action.type === "UPDATEDP"){
+        return{
+            ...state,                       //Here we'll update the previous state and will override the pic
+            pic : action.payload
+        }
+    }
     else{
         return state;
     }
