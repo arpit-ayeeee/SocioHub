@@ -41,7 +41,7 @@ userRouter.put('/follow', requireLogin, (req, res) => {
             $push: {following: req.body.followId}                   
         },
         {
-            new: true
+            new: true                                                   //We use new:true, to return the document after the update was applied
         })
         .select("-password")                  //cause we need to remove the password
         .then(result => {
