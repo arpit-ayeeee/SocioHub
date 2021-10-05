@@ -4,7 +4,7 @@ import {Link, useHistory} from 'react-router-dom';
 import M from "materialize-css";
 
 const Login = () => {
-        const {state, dispatch} = useContext(UserContext);
+        const {dispatch} = useContext(UserContext);
         const history = useHistory();                       //We'll use this to send the user back to the login page after the user is signed in succesfully
         const [password, setPassword] = useState('');
         const [email, setEmail] = useState('');

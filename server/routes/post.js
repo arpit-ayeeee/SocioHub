@@ -9,7 +9,7 @@ const Post = mongoose.model('Post');
 //Fetching the post
 postRouter.get('/allposts', requireLogin, (req, res) => {        //Since the requirelogin middleware returns the userdata in the result, we'll use it here in the PostedBy part of the the schema
     Post.find()                                                 //Cause we want all the posts
-        .populate('postedBy',"_id name pic")                        //So that we'll get _id and name of the user rather than just the objectId. The first para tells which component and second tell the part to be displayed
+        .populate('postedBy',"_id name pic") //So that we'll get _id and name of the user rather than just the objectId. The first para tells which component and second tell the part to be displayed
         .populate('comments.postedBy','_id name')
         .then(posts => {
             res.json({posts})

@@ -64,7 +64,7 @@ const Profile = () => {
          <div style={{ margin:"18px 0px", borderBottom:"1px solid grey"}}>    {/* For the user section */}                                       
            <div style={{display:"flex", justifyContent:"space-around"}} className="DpNameDiv">
                <div className="DpDiv">
-                  <img style={{width:"160px", height:"160px", borderRadius:"80px"}}
+                  <img alt="dp" style={{width:"160px", height:"160px", borderRadius:"80px"}}
                         src={state?state.pic: "Fetching"}
                   />
                </div>

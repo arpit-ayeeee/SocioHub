@@ -84,7 +84,7 @@ const UserProfile = () => {
         <div style={{maxWidth:"750px", margin:"0px auto"}}>                                                
            <div style={{display:"flex", justifyContent:"space-around", margin:"18px 0px", borderBottom:"1px solid grey"}} className="DpNameDiv">
                <div className="DpDiv">
-                   <img style={{width:"160px", height:"160px", borderRadius:"80px"}}
+                   <img alt="dp" style={{width:"160px", height:"160px", borderRadius:"80px"}}
                         src={data.user.pic}
                          />
                </div>

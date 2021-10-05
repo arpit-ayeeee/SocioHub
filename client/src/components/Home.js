@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 
 const Home = () => {
     const [data, setData] = useState([]);
-    const {state, dispatch} = useContext(UserContext);
+    const {state} = useContext(UserContext);
     useEffect(() => {
         fetch('/allposts',{
             method: "get",
@@ -126,10 +126,10 @@ const Home = () => {
                     return(
                         <div className="card home-card" key={post._id}>
                             <h5 style={{marginLeft:"2px", height:"50px", padding:"15px"}}>
-                                <img src={post.postedBy.pic} style={{borderRadius:"2px", height:"40px", padding:"5px"}}></img>
+                                <img alt="dp" src={post.postedBy.pic} style={{borderRadius:"2px", height:"40px", padding:"5px"}}></img>
                                 <Link to={"/userprofile/"+ post.postedBy._id} style={{marginLeft:"5px", position:"absolute", top:"20px"}}>{post.postedBy.name}</Link>       {/* So if user clicks on the post creater name, we'll pass the user's id to the userprofile route*/}
                                 {
-                                    post.postedBy._id == state._id ?
+                                    post.postedBy._id === state._id ?
                                     <i className="material-icons" style={{float:"right"}} onClick={() => deletePost(post._id)}>
                                         delete
                                     </i>
@@ -137,7 +137,7 @@ const Home = () => {
                                 } 
                             </h5>
                             <div className="card-image">
-                                <img src={post.photo}/>
+                                <img alt="dp" src={post.photo}/>
                             </div>
                             <div className="card-content">
                                 {/*We use this logic using the CONTEXT, so that if user has liked, then unlike is visible, and vice versa */}

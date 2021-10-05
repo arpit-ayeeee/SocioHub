@@ -17,7 +17,7 @@ export const UserContext = createContext();          //We'll create a context ap
 
 const Routing = ()=>{
   const history = useHistory();
-  const {state, dispatch} = useContext(UserContext);
+  const {dispatch} = useContext(UserContext);
   useEffect(() => {                 //We'll use this effect sabse pehle, so that if user is logged in then it'll be directed to home screen, else it'll go to login
     const user = JSON.parse(localStorage.getItem("user")); //Once any user is logged in the backend will return the token and details, which will be saved in the local storage, so this user will have that details parsed
     if(user){
