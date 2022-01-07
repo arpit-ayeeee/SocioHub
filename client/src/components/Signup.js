@@ -73,7 +73,10 @@ const Signup = () => {
     return(
         <div className="mycard">
             <div className="card auth-card input-field">
-                <h2>SocioHub</h2>
+                <div className="card-icon">
+                    <img class="auth-icon" src="/images/docshub.png"/>
+                    <h2>oc's Hub</h2>
+                </div>
                 <input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)}/> 
                 <input type="text" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
                 <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
@@ -86,8 +89,8 @@ const Signup = () => {
                         <input className="file-path validate" type="text" />
                     </div>
                 </div>
-                <button className ="btn waves-effect waves-light #64b5f6 blue darken-1" onClick={() => postData()}>Sign Up</button>
-                <h5><Link to="/login">Already have an account?</Link></h5>
+                <button className ="btn waves-effect waves-light #64b5f6 blue darken-1 auth-btn" onClick={() => postData()}>Sign Up</button>
+                <h5><Link to="/login">Already a user?</Link></h5>
             </div>
         </div>
     )

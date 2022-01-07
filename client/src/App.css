@@ -6,16 +6,33 @@ a{
     font-family: 'Grand Hotel', cursive;
     margin-left: 30px;
 }
+.brand-icon{
+    width:50px;
+    height:50px;
+    margin-top:7px;
+}
 
 /* LOGIN & SIGNUP */
+.auth-icon{
+    width:150px;
+    height:150px;
+}
 .auth-card{
     margin: 120px auto;
     padding: 10px 20px;
     text-align: center;
     max-width: 400px;
 }
-.auth-card h2{
+.card-icon{
+    display:flex;
+    flex-direction:row;
+    margin-bottom: 30px;
+}
+.card-icon h2{
     font-family: 'Grand Hotel', cursive;
+}
+.auth-btn{
+    margin-top:30px;
 }
 .input-field input[type=text][type=password]:focus {
     border-bottom: 1px solid rgb(8, 93, 252) !important;
